@@ -11,14 +11,18 @@
 <body>
     <div class="clock">
         <div class="clock-face">
+            <div class="clock-hours">
+       
+        </div>       
             <div class="hand hour-hand"></div>
             <div class="hand min-hand"></div>
-            <div class="hand second-hand"></div>
+            <div class="hand second-hand">🤾🏼</div>
+            
         </div>
     </div>
     <style>
         html{
-            background-image: linear-gradient(blue, yellow);
+            background-image: linear-gradient(blue, purple);
             background-size: cover;
             font-family: Arial, Helvetica, sans-serif;
             font-size: 10px;
@@ -32,18 +36,97 @@
       min-height: 100vh;
       align-items: center;
     }
-
+    .clock{
+        width: 30rem;
+        height: 30rem;
+        border: 10px solid beige;
+        border-radius: 50%;
+        box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+        position: relative;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+        .clock-face{
+            position: relative;
+            height: 100%;
+            width: 100%;
+            transform: translateY(-3px);
+            
+        }
+      
     .hand{
-        width: 50%;
+        width: 45%;
         height: 6px;
         background-color: black;
         position: absolute;
         top:50%;
+        left: 5%;
         transform-origin:100%;
         transform: rotate(90deg);
         transition: all 0.5sec;
         transition-timing-function: ease-in-out;
     }
+    .clock-hours {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+.clock-hours p {
+  position: absolute;
+  transform-origin: bottom center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 15px;
+}
+
     </style>
+    <script>
+
+
+
+function setDate(){
+const now = new Date();
+
+const seconds = now.getSeconds();
+const secondsDegrees = ((seconds/60) * 360) +90;
+const secondHand = document.querySelector('.second-hand');
+secondHand.style.transform =`rotate(${secondsDegrees}deg)`
+
+const mins = now.getMinutes();
+const minsDegrees = ((mins/60)*360)+90
+const minsHand = document.querySelector('.min-hand');
+minsHand.style.transform =`rotate(${minsDegrees}deg)`;
+
+const hours = now.getHours();
+const hoursDegrees = ((hours/12)*360)+90
+const hoursHand = document.querySelector('.hour-hand');
+hoursHand.style.transform =`rotate(${hoursDegrees}deg)`;
+}
+
+setInterval(setDate,1000)
+
+//generating hour numbers and position
+const clockHours = document.querySelector('.clock-hours');
+let hourPosition = 30;
+for(let i =1; i<=12; i++){
+    const hourNumber = document.createElement('p');
+  hourNumber.innerText = i;
+  hourNumber.style.transform = `rotate(${hourPosition}deg) translate(0, -120px)`;
+  clockHours.appendChild(hourNumber);
+  hourPosition += 30;
+}
+    </script>
 </body>
 </html>
